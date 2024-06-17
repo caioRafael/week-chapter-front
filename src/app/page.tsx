@@ -1,20 +1,20 @@
-import Image from "next/image";
+import { BookList } from "@/components/BookList";
+import { PaginationLimitEnum } from "@/interfaces/pagination";
+import { paginatedBookUseCase } from "@/services/books";
 
-export default function Home() {
+export default async function Home() {
+  const { queryPaginationBooks } = paginatedBookUseCase
+
+  const data = await queryPaginationBooks(1, PaginationLimitEnum.Twenty)
   return (
-    <div className="w-screen h-page flex flex-col items-center p-10">
-      <div className="w-5/6 flex flex-row gap-10 items-start justify-start">
-        <Image
-          src={'/week-chapter-capa.jpg'}
-          width={400}
-          height={700}
-          alt="book"
-        />
-        <div className="flex flex-col gap-5 items-start justify-center">
-          <h1 className="font-goudy font-semibold text-xl text-foreground">Bem vindo ao Week Chapter</h1>
-          <p className="w-96">Esta é uma plataforma voltada para insentivar altores a publicarem suas obras, aproximandoos de seu publico. Faça com que seus leitores acompanhem o desenvolvimento de sua obra constantemente.</p>
-        </div>
+    <div className="w-screen h-page flex flex-col items-center p-10 gap-4">
+      <div className="flex w-full flex-col items-start justify-center gap-4">
+        <h1 className="font-goudy text-foreground text-xl font-semibold">Bem vindo ao Week Chapter</h1>
+        <p className="w-96 text-foreground font-normal">
+          Este é um ambiente voltado para aproximar escritores de seus leitores. Seja um excritor e publique cápitulos de sua obra ocasionalmente. Ou seja um leitor e tenha acessos a diferentes obras literarias e diferentes mundos.
+        </p>
       </div>
+      <BookList booksInitialData={data} />
     </div>
   );
 }

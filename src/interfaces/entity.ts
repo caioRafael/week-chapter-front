@@ -1,4 +1,4 @@
 export default interface Entity {
-  id: string
+  id?: string
   [key: string]: any
 }
